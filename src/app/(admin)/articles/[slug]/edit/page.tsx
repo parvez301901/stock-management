@@ -138,6 +138,7 @@ export default function EditArticlePage() {
               <Label>Title</Label>
               <Input placeholder="Article title" defaultValue={title} onChange={(e: any) => setTitle(e.target?.value ?? "")} />
             </div>
+
             <div>
               <Label>Content</Label>
               <textarea
@@ -158,10 +159,16 @@ export default function EditArticlePage() {
               </div>
             </div>
             <div>
-              <Label>Article Image</Label>
+              <Label>Article Image (Optional)</Label>
               <div className="flex items-center gap-3">
-                <input type="file" accept="image/*" onChange={(e) => setImage(e.target.files?.[0] ?? null)} />
-                <span className="text-xs text-gray-500 dark:text-gray-400">{image?.name || "No file chosen"}</span>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => setImage(e.target.files?.[0] ?? null)}
+                />
+                <span className="text-xs text-gray-500 dark:text-gray-400">
+                  {image?.name || "No file chosen"}
+                </span>
               </div>
               {preview && (
                 <div className="mt-2">
@@ -169,31 +176,46 @@ export default function EditArticlePage() {
                 </div>
               )}
             </div>
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-              <div>
-                <Label>Attachment #1 (any file)</Label>
-                <div className="flex items-center gap-3">
-                  <input type="file" onChange={(e) => setFile1(e.target.files?.[0] ?? null)} />
-                  <span className="text-xs text-gray-500 dark:text-gray-400">{file1?.name || (currentFile1Url ? "Existing" : "No file chosen")}</span>
-                  {currentFile1Url && (
-                    <a href={currentFile1Url} target="_blank" className="text-xs text-brand-600 underline">View current</a>
-                  )}
-                </div>
-              </div>
-              <div>
-                <Label>Attachment #2 (any file)</Label>
-                <div className="flex items-center gap-3">
-                  <input type="file" onChange={(e) => setFile2(e.target.files?.[0] ?? null)} />
-                  <span className="text-xs text-gray-500 dark:text-gray-400">{file2?.name || (currentFile2Url ? "Existing" : "No file chosen")}</span>
-                  {currentFile2Url && (
-                    <a href={currentFile2Url} target="_blank" className="text-xs text-brand-600 underline">View current</a>
-                  )}
-                </div>
-              </div>
-            </div>
           </div>
 
           <div className="space-y-5 lg:col-span-1">
+            <div className="rounded-lg border p-4 dark:border-gray-800">
+              <h2 className="mb-3 text-base font-semibold text-gray-800 dark:text-white/90">Attachments</h2>
+              <div className="space-y-4">
+                {currentFile1Url && (
+                  <div className="text-sm">
+                    <span className="text-gray-600 dark:text-gray-300 mr-2">Current Attachment 1:</span>
+                    <a href={currentFile1Url} target="_blank" rel="noreferrer" className="text-brand-600 hover:underline dark:text-brand-400">View</a>
+                  </div>
+                )}
+                <div>
+                  <Label>Replace Attachment 1</Label>
+                  <input
+                    type="file"
+                    accept=".pdf,.doc,.docx,.xls,.xlsx,image/*"
+                    onChange={(e) => setFile1(e.target.files?.[0] ?? null)}
+                  />
+                  <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">{file1?.name || (currentFile1Url ? "Existing" : "No file chosen")}</div>
+                </div>
+
+                {currentFile2Url && (
+                  <div className="text-sm">
+                    <span className="text-gray-600 dark:text-gray-300 mr-2">Current Attachment 2:</span>
+                    <a href={currentFile2Url} target="_blank" rel="noreferrer" className="text-brand-600 hover:underline dark:text-brand-400">View</a>
+                  </div>
+                )}
+                <div>
+                  <Label>Replace Attachment 2</Label>
+                  <input
+                    type="file"
+                    accept=".pdf,.doc,.docx,.xls,.xlsx,image/*"
+                    onChange={(e) => setFile2(e.target.files?.[0] ?? null)}
+                  />
+                  <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">{file2?.name || (currentFile2Url ? "Existing" : "No file chosen")}</div>
+                </div>
+              </div>
+            </div>
+
             {availableFields.length > 0 && (
               <div className="rounded-lg border p-4 dark:border-gray-800">
                 <h2 className="mb-3 text-base font-semibold text-gray-800 dark:text-white/90">Custom Fields</h2>

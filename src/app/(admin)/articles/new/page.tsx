@@ -21,6 +21,8 @@ export default function NewArticlePage() {
   );
   const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
+  const [file1, setFile1] = useState<File | null>(null);
+  const [file2, setFile2] = useState<File | null>(null);
 
   const [availableFields, setAvailableFields] = useState<ExtraField[]>([]);
   const [selected, setSelected] = useState<Record<string, boolean>>({});
@@ -86,6 +88,8 @@ export default function NewArticlePage() {
       fd.append("author_name", author);
       fd.append("publication_date", publicationDate);
       if (image) fd.append("image", image);
+      if (file1) fd.append("file1", file1);
+      if (file2) fd.append("file2", file2);
 
       const payload: Record<string, any> = {};
       for (const f of availableFields) {
@@ -240,6 +244,34 @@ export default function NewArticlePage() {
                 ))}
               </div>
             )}
+          </div>
+
+          <div className="rounded-lg border p-4 dark:border-gray-800">
+            <h2 className="mb-3 text-base font-semibold text-gray-800 dark:text-white/90">Attachments (Optional)</h2>
+            <div className="space-y-4">
+              <div>
+                <Label>Attachment 1</Label>
+                <input
+                  type="file"
+                  accept=".pdf,.doc,.docx,.xls,.xlsx,image/*"
+                  onChange={(e) => setFile1(e.target.files?.[0] ?? null)}
+                />
+                <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                  {file1?.name || "No file chosen"}
+                </div>
+              </div>
+              <div>
+                <Label>Attachment 2</Label>
+                <input
+                  type="file"
+                  accept=".pdf,.doc,.docx,.xls,.xlsx,image/*"
+                  onChange={(e) => setFile2(e.target.files?.[0] ?? null)}
+                />
+                <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                  {file2?.name || "No file chosen"}
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="flex justify-end gap-3">

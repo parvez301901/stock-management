@@ -93,6 +93,24 @@ export default function ArticleDetailPage() {
               </div>
             </div>
           )}
+
+          {(article.file1_url || article.file2_url) && (
+            <div className="mt-6">
+              <h3 className="mb-2 text-base font-semibold">Attachments</h3>
+              <div className="flex flex-col gap-2 text-sm">
+                {article.file1_url && (
+                  <a href={article.file1_url} target="_blank" rel="noreferrer" className="text-brand-600 hover:underline dark:text-brand-400">
+                    Download Attachment 1
+                  </a>
+                )}
+                {article.file2_url && (
+                  <a href={article.file2_url} target="_blank" rel="noreferrer" className="text-brand-600 hover:underline dark:text-brand-400">
+                    Download Attachment 2
+                  </a>
+                )}
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>
