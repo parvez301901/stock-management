@@ -529,6 +529,18 @@ export const authApi = {
     });
     return response.data as { access_token?: string; token?: string; user?: any };
   },
+  forgotPassword: async (email: string) => {
+    const response = await axios.post(`${AUTH_BASE_URL}/api/password/forgot`, { email }, {
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+    });
+    return response.data as { message: string };
+  },
+  resetPassword: async (payload: { email: string; token: string; password: string; password_confirmation: string }) => {
+    const response = await axios.post(`${AUTH_BASE_URL}/api/password/reset`, payload, {
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+    });
+    return response.data as { message: string };
+  },
   me: async () => {
     const response = await api.get("/me");
     return response.data as any;
