@@ -68,7 +68,7 @@ export interface Article {
   id?: number;
   title: string;
   slug?: string;
-  content: string;
+  content?: string;
   author_name: string;
   publication_date: string;
   image_path?: string | null;
@@ -122,7 +122,7 @@ export interface User {
 
 interface ArticleBase {
   title: string;
-  content: string;
+  content?: string;
   author_name: string;
   publication_date: string;
   image?: File;

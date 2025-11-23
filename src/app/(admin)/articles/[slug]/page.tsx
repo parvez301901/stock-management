@@ -78,7 +78,7 @@ export default function ArticleDetailPage() {
           {article.image_url && (
             <img src={article.image_url} alt={article.title} className="mb-4 max-h-80 w-auto rounded" />
           )}
-          <p className="whitespace-pre-line text-gray-700 dark:text-gray-300">{article.content}</p>
+          {/* Content removed */}
 
           {article.extra_fields && (
             <div className="mt-6">

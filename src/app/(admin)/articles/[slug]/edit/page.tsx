@@ -88,7 +88,6 @@ export default function EditArticlePage() {
     try {
       const fd = new FormData();
       fd.append("title", title);
-      fd.append("content", content);
       fd.append("author_name", author);
       if (publicationDate) fd.append("publication_date", publicationDate);
       if (image) fd.append("image", image);
@@ -139,15 +138,7 @@ export default function EditArticlePage() {
               <Input placeholder="Article title" defaultValue={title} onChange={(e: any) => setTitle(e.target?.value ?? "")} />
             </div>
 
-            <div>
-              <Label>Content</Label>
-              <textarea
-                rows={10}
-                className="h-auto w-full rounded-lg border bg-transparent px-4 py-3 text-sm shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
-                defaultValue={content}
-                onChange={(e) => setContent(e.target.value)}
-              />
-            </div>
+            {/* Content field removed */}
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
               <div>
                 <Label>Author Name</Label>

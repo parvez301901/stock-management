@@ -14,7 +14,7 @@ export default function NewArticlePage() {
   const { isAuthenticated } = useAuth();
 
   const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  // Removed content field
   const [author, setAuthor] = useState("");
   const [publicationDate, setPublicationDate] = useState<string>(() =>
     new Date().toISOString().split("T")[0]
@@ -76,7 +76,7 @@ export default function NewArticlePage() {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    if (!title.trim() || !content.trim() || !author.trim() || !publicationDate) {
+    if (!title.trim() || !author.trim() || !publicationDate) {
       setError("Please fill all required fields");
       return;
     }
@@ -84,7 +84,7 @@ export default function NewArticlePage() {
     try {
       const fd = new FormData();
       fd.append("title", title);
-      fd.append("content", content);
+      // no content field
       fd.append("author_name", author);
       fd.append("publication_date", publicationDate);
       if (image) fd.append("image", image);
@@ -148,16 +148,7 @@ export default function NewArticlePage() {
               onChange={(e: any) => setTitle(e.target?.value ?? "")}
             />
           </div>
-          <div>
-            <Label>Content</Label>
-            <textarea
-              rows={10}
-              placeholder="Write your content..."
-              className="h-auto w-full rounded-lg border bg-transparent px-4 py-3 text-sm shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
-              defaultValue={content}
-              onChange={(e) => setContent(e.target.value)}
-            />
-          </div>
+          {/* Content field removed */}
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
             <div>
               <Label>Author Name</Label>
@@ -185,8 +176,11 @@ export default function NewArticlePage() {
                 onChange={(e) => setImage(e.target.files?.[0] ?? null)}
               />
               <span className="text-xs text-gray-500 dark:text-gray-400">
-                {image?.name || "No file chosen"}
+                {image ? `${image.name} (${Math.round(image.size/1024)} KB)` : "No file chosen"}
               </span>
+              {image && (
+                <button type="button" onClick={() => setImage(null)} className="text-xs text-error-600 hover:underline">Clear</button>
+              )}
             </div>
             {preview && (
               <div className="mt-2">
@@ -256,8 +250,11 @@ export default function NewArticlePage() {
                   accept=".pdf,.doc,.docx,.xls,.xlsx,image/*"
                   onChange={(e) => setFile1(e.target.files?.[0] ?? null)}
                 />
-                <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                  {file1?.name || "No file chosen"}
+                <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 mt-1">
+                  <span>{file1 ? `${file1.name} (${Math.round(file1.size/1024)} KB)` : "No file chosen"}</span>
+                  {file1 && (
+                    <button type="button" onClick={() => setFile1(null)} className="text-error-600 hover:underline">Clear</button>
+                  )}
                 </div>
               </div>
               <div>
@@ -267,8 +264,11 @@ export default function NewArticlePage() {
                   accept=".pdf,.doc,.docx,.xls,.xlsx,image/*"
                   onChange={(e) => setFile2(e.target.files?.[0] ?? null)}
                 />
-                <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                  {file2?.name || "No file chosen"}
+                <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 mt-1">
+                  <span>{file2 ? `${file2.name} (${Math.round(file2.size/1024)} KB)` : "No file chosen"}</span>
+                  {file2 && (
+                    <button type="button" onClick={() => setFile2(null)} className="text-error-600 hover:underline">Clear</button>
+                  )}
                 </div>
               </div>
             </div>
