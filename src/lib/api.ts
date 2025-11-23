@@ -1,6 +1,14 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://localhost:8000/api/v1";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000/api/v1";
+const AUTH_BASE_URL = process.env.NEXT_PUBLIC_AUTH_BASE_URL || "http://localhost:8000";
+const API_ORIGIN = (() => {
+  try {
+    return new URL(API_BASE_URL).origin;
+  } catch {
+    return "";
+  }
+})();
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -205,7 +213,7 @@ export const articleApi = {
   getImageUrl: (path: string) => {
     if (!path) return "";
     if (path.startsWith("http")) return path;
-    return `${API_BASE_URL.replace("/api/v1", "")}${path.startsWith("/") ? "" : "/"}${path}`;
+    return `${API_ORIGIN}${path.startsWith("/") ? "" : "/"}${path}`;
   },
 };
 
@@ -483,7 +491,7 @@ export const materialApi = {
   getImageUrl: (path: string) => {
     if (!path) return "";
     if (path.startsWith("http")) return path;
-    return `${API_BASE_URL.replace("/api/v1", "")}${path.startsWith("/") ? "" : "/"}${path}`;
+    return `${API_ORIGIN}${path.startsWith("/") ? "" : "/"}${path}`;
   },
 };
 
@@ -516,7 +524,7 @@ export const extraFieldsApi = {
 export const authApi = {
   login: async (email: string, password: string) => {
     // Login endpoint is outside of /api/v1
-    const response = await axios.post("http://localhost:8000/api/login", { email, password }, {
+    const response = await axios.post(`${AUTH_BASE_URL}/api/login`, { email, password }, {
       headers: { "Content-Type": "application/json", Accept: "application/json" },
     });
     return response.data as { access_token?: string; token?: string; user?: any };
