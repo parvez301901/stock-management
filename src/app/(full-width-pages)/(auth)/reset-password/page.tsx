@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { Suspense, useMemo, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Label from "@/components/form/Label";
 import Input from "@/components/form/input/InputField";
@@ -9,7 +9,7 @@ import Link from "next/link";
 import { useToast } from "@/components/ui/toast/ToastProvider";
 import { authApi } from "@/lib/api";
 
-export default function ResetPasswordPage() {
+function ResetPasswordInner() {
   const params = useSearchParams();
   const router = useRouter();
   const tokenFromUrl = params.get("token") || "";
@@ -75,5 +75,13 @@ export default function ResetPasswordPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function ResetPasswordPage() {
+  return (
+    <Suspense fallback={<div className="p-6 text-gray-500">Loading...</div>}>
+      <ResetPasswordInner />
+    </Suspense>
   );
 }
