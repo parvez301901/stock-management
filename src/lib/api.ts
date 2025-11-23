@@ -25,7 +25,7 @@ const apiFormData = axios.create({
     Accept: "application/json",
     "X-Requested-With": "XMLHttpRequest",
   },
-  withCredentials: true,
+  withCredentials: false,
   transformRequest: (data: any) => {
     if (data instanceof FormData) return data;
     return JSON.stringify(data);
