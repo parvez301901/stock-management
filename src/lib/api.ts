@@ -21,7 +21,7 @@ const api = axios.create({
 const apiFormData = axios.create({
   baseURL: API_BASE_URL,
   headers: {
-    "Content-Type": "multipart/form-data",
+    // Do NOT set Content-Type here; let the browser set the multipart boundary automatically.
     Accept: "application/json",
     "X-Requested-With": "XMLHttpRequest",
   },
@@ -297,7 +297,9 @@ export const brandingApi = {
       if ((data as any).company_logo_clear) f.append('company_logo_clear', 'true');
       return f;
     })();
-    const res = await apiFormData.put('/settings/branding', fd);
+    // Use POST with method override for better multipart compatibility on some hosts
+    fd.append('_method', 'PUT');
+    const res = await apiFormData.post('/settings/branding', fd);
     return res.data as BrandingSettings;
   },
 };
